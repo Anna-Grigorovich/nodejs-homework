@@ -32,6 +32,14 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  verify: {
+    type: Boolean,
+    default: false,
+  },
+  verificationCode: {
+    type: String,
+    default: "",
+  },
 });
 
 const registerShema = Joi.object({
@@ -44,11 +52,16 @@ const loginShema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
 });
 
+const emailSchema = Joi.object({
+  email: Joi.string().pattern(emailRegexp).required(),
+});
+
 userSchema.post("save", handleMongooseError);
 
 const sсhemas = {
   registerShema,
   loginShema,
+  emailSchema,
 };
 
 const User = model("user", userSchema);
